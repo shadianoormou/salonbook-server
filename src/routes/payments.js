@@ -43,7 +43,6 @@ export function paymentRoutes({ db, guards, stripe, config }) {
       const session = await stripe.checkout.sessions.create(
         {
           mode: 'payment',
-          payment_method_types: ['card'],
           customer_email: req.user.email,
           client_reference_id: id.toString(),
           metadata: { appointmentId: id.toString(), customerId: req.user.id },
