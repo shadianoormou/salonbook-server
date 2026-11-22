@@ -6,7 +6,8 @@ The REST API for SalonBook, a salon appointment booking platform for Assignment 
 
 - Server: https://github.com/shadianoormou/salonbook-server
 - Client: https://github.com/shadianoormou/salonbook-client
-- Live API: pending production database and integration configuration.
+- Live API: https://salonbook-server-beryl.vercel.app
+- Live website: https://salonbook-client-nu.vercel.app
 
 ## Features and technology
 
@@ -112,4 +113,4 @@ The webhook is mounted before JSON parsing to preserve its raw body. A return UR
 
 ## Current status
 
-Local integration tests and browser booking/confirmation flows pass. Production deployment, Google OAuth, ImgBB delivery, and actual Stripe test-mode Checkout depend on production account configuration. No live secrets are committed.
+All 10 integration tests pass. The API is deployed with MongoDB Atlas. Production checks passed for administrator sign-in, Google customer sign-in, JWT access, catalog retrieval, booking, administrator confirmation, session refresh, and ImgBB delivery. Google OAuth and ImgBB credentials are stored privately in Vercel. Stripe Checkout remains disabled pending a usable Stripe test account secret and webhook signing secret; signed webhook fixtures pass, but actual Checkout has not been tested. No live secrets are committed.
