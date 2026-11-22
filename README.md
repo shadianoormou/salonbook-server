@@ -94,7 +94,7 @@ The salon has one reservation capacity per date/time slot across services. Cance
 pnpm test
 ```
 
-Tests create an isolated MongoDB replica set. They cover registration privilege protection, service visibility, JWT rejection, role checks, ownership, booking races, status transitions, profile restrictions, blocking, slot release, and signed webhook replay. Stripe-signed fixtures do not charge a card or replace a real test-mode Checkout test.
+Tests create an isolated MongoDB replica set. They cover registration privilege protection, service visibility, JWT rejection, role checks, ownership, booking races, status transitions, profile restrictions, blocking, slot release, and signed webhook replay. A live Stripe test-mode Checkout was also completed against the production deployment with the documented test card.
 
 ## Deployment
 
@@ -113,4 +113,4 @@ The webhook is mounted before JSON parsing to preserve its raw body. A return UR
 
 ## Current status
 
-All 10 integration tests pass. The API is deployed with MongoDB Atlas. Production checks passed for administrator sign-in, Google customer sign-in, JWT access, catalog retrieval, booking, administrator confirmation, session refresh, and ImgBB delivery. Google OAuth and ImgBB credentials are stored privately in Vercel. Stripe Checkout remains disabled pending a usable Stripe test account secret and webhook signing secret; signed webhook fixtures pass, but actual Checkout has not been tested. No live secrets are committed.
+All 10 integration tests pass. The API is deployed with MongoDB Atlas. Production checks passed for administrator sign-in, Google customer sign-in, JWT access, catalog retrieval, booking, administrator confirmation, session refresh, ImgBB delivery, Stripe Checkout, and a delivered signed webhook. Google OAuth, ImgBB, Stripe, and Better Auth credentials are stored privately in Vercel. No live secrets are committed.
