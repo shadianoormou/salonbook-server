@@ -21,7 +21,15 @@ export function errorHandler(error, req, res, next) {
     return res.status(400).json({ message: 'Image must be smaller than 5 MB.' });
   const status = error.status || 500;
   if (status >= 500)
-    console.error('Request failed', { method: req.method, path: req.path, type: error.name });
+    console.error('Request failed', {
+      method: req.method,
+      path: req.path,
+      type: error.name,
+      code: error.code,
+      stripeType: error.type,
+      stripeCode: error.code,
+      message: error.message,
+    });
   res
     .status(status)
     .json({ message: status >= 500 ? 'Something went wrong. Please try again.' : error.message });
