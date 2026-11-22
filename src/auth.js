@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from '@better-auth/mongo-adapter';
 import { jwt } from 'better-auth/plugins';
-import { APIError, createAuthMiddleware } from 'better-auth/api';
+import { APIError, createAuthMiddleware, getSessionFromCtx } from 'better-auth/api';
 import { objectId } from './db.js';
 
 export function createAuthentication(db, client, config) {
@@ -25,6 +25,10 @@ export function createAuthentication(db, client, config) {
       definePayload: ({user, session}) => ({sub: user.id, sessionId: session.id}),
     }})],
     hooks: {before: createAuthMiddleware(async ctx => {
+      if (['/update-user','/change-password','/set-password','/link-social','/unlink-account'].includes(ctx.path)) {
+        const current=await getSessionFromCtx(ctx);
+        if(current){const user=await db.collection('users').findOne({_id:objectId(current.user.id)});if(user?.isBlocked)throw new APIError('FORBIDDEN',{message:'Your account is blocked. Contact the salon.'});}
+      }
       if (ctx.path === '/sign-up/email' || ctx.path === '/change-password' || ctx.path === '/set-password' || ctx.path === '/reset-password') {
         const password = ctx.body?.newPassword || ctx.body?.password;
         if (password && (!/[A-Z]/.test(password) || !/[a-z]/.test(password))) throw new APIError('BAD_REQUEST', {message: 'Password needs an uppercase and a lowercase letter.'});
